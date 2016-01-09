@@ -1,6 +1,7 @@
 #encoding:utf-8
 
 import datetime
+from principal.models import Juego
 from django.db import connection
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
@@ -21,12 +22,17 @@ def gettingData_Steam(nombre):
     url = "http://store.steampowered.com/search/?snr=1_4_4__12&term="+nombre    
     
     soup = BeautifulSoup(urlopen(str(url)),'html.parser')
-    stmaux1 = soup.find_all('div',class_='responsive_search_name_combined')
+    stmaux1 = soup.find_all('a',class_='search_result_row ds_collapse_flag')
     for i in stmaux1:
-        
+        newJuego = Juego()
+        url = i['href']
         sopa = BeautifulSoup(str(i),'html.parser')
         titulo = sopa.find('span',class_='title').contents[0].lstrip().rstrip()
-        print titulo
+        precio = sopa.find('div',class_='col search_price  responsive_secondrow').contents[0].lstrip().rstrip()
+        newJuego.titulo = titulo
+        newJuego.url = url
+        newJuego.precio = precio
+        print titulo +" ("+ precio +")" + url
         
         print "--------------------"
         if(cont>=4):
@@ -40,14 +46,14 @@ def gettingData_humble(nombre):
     
     
     soup = BeautifulSoup(urlopen(str(url)),'html.parser')
-    stmaux1 = soup.find_all('div',class_='info')
-    for i in stmaux1:
+    hmblaux1 = soup.find_all('div',class_='js-search-results-holder search-results-holder')
+    print hmblaux1
+    for i in hmblaux1:
         
         sopa1 = BeautifulSoup(str(i),'html.parser')
         aux = sopa1.find('h4',itemprop='name').contents[0]
         sopa2 = BeautifulSoup(str(aux),'html.parser')
         titulo = sopa2['a'].contents[0]
-        print titulo
         
         print "--------------------"
         if(cont>=4):
