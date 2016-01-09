@@ -2,18 +2,19 @@
 
 import datetime
 #from principal.models import Juego
-from django.db import connection
+#from django.db import connection
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
+import urllib2
 
 
 def buscar_nombre(nombre):
     
-    result_steam = gettingData_Steam(nombre)
+    #result_steam = gettingData_Steam(nombre)
     
-    #result_humble = gettingData_humble(nombre)
+    result_greenman = gettingData_greenman(nombre)
     
-    result_kinguin = gettingData_kinguin(nombre)
+    #result_kinguin = gettingData_kinguin(nombre)
     
     return 0
 
@@ -42,27 +43,30 @@ def gettingData_Steam(nombre):
         pass
     return 0
     
-def gettingData_cdkeys(nombre):
+def gettingData_greenman(nombre):
     cont = 0
-    url = "http://www.cdkeys.com/catalogsearch/result/?q="+nombre
+    url = "http://www.greenmangaming.com/search/?q="+nombre+"#b"
     
     try:
-        soup = BeautifulSoup(urlopen(str(url)),'html.parser')
-        hmblaux1 = soup.find_all('div',class_='js-search-results-holder search-results-holder')
-        print hmblaux1
-        for i in hmblaux1:
-            
+        asd = urllib2.Request(url, headers={'User-Agent' : "Magic Browser"})
+        con = urllib2.urlopen(asd)
+        soup = BeautifulSoup(con.read(),'html.parser')
+        gmgaux1 = soup.find_all('li',class_='border-container clearfix')
+        for i in gmgaux1:
+                
             sopa1 = BeautifulSoup(str(i),'html.parser')
-            aux = sopa1.find('h4',itemprop='name').contents[0]
+            titulo = sopa1.find('h2',class_='notranslate').contents[0].lstrip().rstrip()
+            url2 = "http://www.greenmangaming.com" + sopa1.a['href'].lstrip().rstrip()
+            aux = sopa1.find('div', class_='formats')
             sopa2 = BeautifulSoup(str(aux),'html.parser')
-            titulo = sopa2['a'].contents[0]
-            
+            aux2 = sopa2.find('div', class_='price')
+            precio = aux2.find('strong', class_='curPrice').contents[0]
             print "--------------------"
             if(cont>=4):
                 break
             cont=cont+1
     except:
-        pass    
+        pass  
     return 0
 
 def gettingData_kinguin(nombre):
@@ -89,5 +93,5 @@ def gettingData_kinguin(nombre):
     except:
         pass
     return 0
-buscar_nombre("fifa")
+buscar_nombre("counter")
     
