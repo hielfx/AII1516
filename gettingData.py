@@ -4,7 +4,8 @@ from principal.models import Juego
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
 import urllib2
-from django.db import connection
+import traceback
+# from django.db import connection
 
 
 def buscar_nombre(nombre):
@@ -34,7 +35,7 @@ def gettingData_Steam(nombre):
                 break
             cont=cont+1
     except:
-        pass
+        traceback.print_exc()
     return 0
     
 def gettingData_greenman(nombre):
@@ -59,7 +60,7 @@ def gettingData_greenman(nombre):
                 break
             cont=cont+1
     except:
-        pass  
+        traceback.print_exc()  
     return 0
 
 def gettingData_kinguin(nombre):
@@ -82,13 +83,16 @@ def gettingData_kinguin(nombre):
                 break
             cont=cont+1   
     except:
-        pass
+        traceback.print_exc()
     return 0
 
-def syncdb_manual(nombre):
-    conn =connection.cursor()
-    conn.execute("DELETE FROM principal_juego")
-    buscar_nombre(nombre)
+#No sirve, djanfo ya gestiona la db
+# def syncdb_manual(nombre):
+#     conn =connection.cursor()
+#     conn.execute("DELETE FROM principal_juego")
+#     buscar_nombre(nombre)
 
 if __name__ == "__main__":   
-    syncdb_manual("counter")
+#     syncdb_manual("counter")
+    nombre = "counter"
+    buscar_nombre(nombre)
