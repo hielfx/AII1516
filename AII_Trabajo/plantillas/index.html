@@ -105,7 +105,7 @@
 							<div class="col-md-4">{#Para que los juegos se muestren en 3 columnas#}
 							    <b>Título:</b> {{ juego.nombre|upper }}<br />
 							    <b>Precio:<b/> 
-							    	{% if juego.precio == "0.0" or juego.precio == "0.00" or juego.precio == "0" %}
+							    	{% if juego.precio == 0.0%}
 							    		Free to Play
 							    	{%else%}
 							    		{{juego.precio}}
@@ -114,6 +114,11 @@
 							    <b>Web:</b> {{juego.web|upper}}<br />
 							    Url: <a href="{{juego.url}}">Visitar enlace</a>
 							    <hr>
+							</div>
+							
+						{% empty %}
+							<div class="col-md-12">
+								<p>No se encontraron resultados</p>
 							</div>
 						{% endfor %}
 					<div>

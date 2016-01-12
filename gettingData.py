@@ -31,8 +31,12 @@ def gettingData_Steam(nombre):
             sopa = BeautifulSoup(str(i),'html.parser')
             titulo = sopa.find('span',class_='title').contents[0].lstrip().rstrip()
             price = sopa.find('div',class_='col search_price  responsive_secondrow').contents[0].lstrip().rstrip()
-            if price=="Free to Play":
-                price = "0.0"
+            if price=="Free to Play"  or price=="free to play":
+                price = 0.00
+            else:
+                split = price.split(",")
+                price = split[0]+"."+split[1]
+                price = float(price[:len(price)-1])#formato de steam
             newJuego = Juego(nombre=titulo, url=newurl, precio=price,web="Steam")
             newJuego.save()
             if(cont>=4):
@@ -58,8 +62,10 @@ def gettingData_greenman(nombre):
             sopa2 = BeautifulSoup(str(aux),'html.parser')
             aux2 = sopa2.find('div', class_='price')
             price = aux2.find('strong', class_='curPrice').contents[0]
-            if price=="Free to Play":
-                price = "0.0"
+            if price=="Free to Play"  or price=="free to play":
+                price = 0.00
+            else:
+                price = float(price[:len(price)-2])#formato de greenmangaming
             newJuego = Juego(nombre=titulo, url=url2, precio=price,web="Greenman Gaming")
             newJuego.save()
             if(cont>=4):
@@ -83,8 +89,10 @@ def gettingData_kinguin(nombre):
             newurl = sopa2.a['href'].lstrip().rstrip()
             sopa3 = BeautifulSoup(str(i.find_next_sibling()),'html.parser')
             price = sopa3.find('span',class_="price add-tax-rate hidden relative-price-container")['data-no-tax-price']
-            if price=="Free to Play":
-                price = "0.0"
+            if price=="Free to Play" or price=="free to play":
+                price = 0.00
+            else:
+                price = float(price)
             newJuego = Juego(nombre=titulo, url=newurl, precio=price,web="Kinguin")
             newJuego.save()            
             if(cont>=4):

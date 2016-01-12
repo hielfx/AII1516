@@ -6,7 +6,7 @@ from django.db import models
 class Juego(models.Model):
     url = models.URLField()
     nombre = models.CharField(max_length=255)
-    precio = models.CharField(max_length=255)
+    precio = models.FloatField()
     web = models.CharField(max_length=255)#Página web de la que procede
     
     def __str__(self):
