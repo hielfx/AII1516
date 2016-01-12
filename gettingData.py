@@ -2,8 +2,10 @@
 
 from principal.models import Juego
 from bs4 import BeautifulSoup
-from urllib2 import urlopen
-import urllib2
+try:#Para que funcione en python 2 y 3
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 import traceback
 # from django.db import connection
 
@@ -22,13 +24,15 @@ def gettingData_Steam(nombre):
     cont = 0
     url = "http://store.steampowered.com/search/?snr=1_4_4__12&term="+nombre    
     try:
-        soup = BeautifulSoup(urlopen(str(url)),'html.parser')
+        soup = BeautifulSoup(urllib2.urlopen(str(url)),'html.parser')
         stmaux1 = soup.find_all('a',class_='search_result_row ds_collapse_flag')
         for i in stmaux1:
             newurl = i['href'].lstrip().rstrip()
             sopa = BeautifulSoup(str(i),'html.parser')
             titulo = sopa.find('span',class_='title').contents[0].lstrip().rstrip()
             price = sopa.find('div',class_='col search_price  responsive_secondrow').contents[0].lstrip().rstrip()
+            if price=="Free to Play":
+                price = "0.0"
             newJuego = Juego(nombre=titulo, url=newurl, precio=price,web="Steam")
             newJuego.save()
             if(cont>=4):
@@ -54,6 +58,8 @@ def gettingData_greenman(nombre):
             sopa2 = BeautifulSoup(str(aux),'html.parser')
             aux2 = sopa2.find('div', class_='price')
             price = aux2.find('strong', class_='curPrice').contents[0]
+            if price=="Free to Play":
+                price = "0.0"
             newJuego = Juego(nombre=titulo, url=url2, precio=price,web="Greenman Gaming")
             newJuego.save()
             if(cont>=4):
@@ -67,7 +73,7 @@ def gettingData_kinguin(nombre):
     cont = 0
     url = "http://www.kinguin.net/es/catalogsearch/result/index/?q="+nombre
     try:
-        soup = BeautifulSoup(urlopen(str(url)),'html.parser')
+        soup = BeautifulSoup(urllib2.urlopen(str(url)),'html.parser')
         stmaux1 = soup.find_all('div',class_='product-name')
         for i in stmaux1:
             sopa1 = BeautifulSoup(str(i),'html.parser')
@@ -77,6 +83,8 @@ def gettingData_kinguin(nombre):
             newurl = sopa2.a['href'].lstrip().rstrip()
             sopa3 = BeautifulSoup(str(i.find_next_sibling()),'html.parser')
             price = sopa3.find('span',class_="price add-tax-rate hidden relative-price-container")['data-no-tax-price']
+            if price=="Free to Play":
+                price = "0.0"
             newJuego = Juego(nombre=titulo, url=newurl, precio=price,web="Kinguin")
             newJuego.save()            
             if(cont>=4):
