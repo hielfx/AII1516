@@ -8,6 +8,9 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'AII_Trabajo.views.home', name='home'),
     # url(r'^AII_Trabajo/', include('AII_Trabajo.foo.urls')),
+    
+    #Index
+    url(r'^','principal.views.index'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
