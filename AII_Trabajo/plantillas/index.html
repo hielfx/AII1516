@@ -102,7 +102,7 @@
 	            <div class="header-content-inner">
 	            	<div class="col-md-12">
 						{% for juego in juegos %}
-							<div class="col-md-4">{#Para que los juegos se muestren en 3 columnas}
+							<div class="col-md-4">{#Para que los juegos se muestren en 3 columnas#}
 							    <b>Título:</b> {{ juego.nombre|upper }}<br />
 							    <b>Precio:<b/> 
 							    	{% if juego.precio == "0.0" or juego.precio == "0.00" or juego.precio == "0" %}
@@ -118,7 +118,7 @@
 						{% endfor %}
 					<div>
 					<br />
-					<div class=" col-md-12 pagination">{#Parte de la paginacion}
+					<div class=" col-md-12 pagination">{#Parte de la paginacion#}
 					    <span class="step-links">
 					        {% if contacts.has_previous %}
 					            <a href="?page={{ contacts.previous_page_number }}">previous</a>
@@ -137,7 +137,7 @@
 					        {% endif %}
 					        <br /><br/>
 					        
-					        <a href="/">Menú principal</a>{#Volver al menu principal}
+					        <a href="/">Menú principal</a>{#Volver al menu principal#}
 					    </span>
 					</div>
 				</div>
