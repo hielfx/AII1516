@@ -20,7 +20,7 @@ def index(request):
             Juego.objects.all().delete()#Borramos el contenido de la tabla
             gettingData.buscar_nombre(titulo)#Obtenemos los nuevos juegos
             
-        juegos_list = Juego.objects.filter(nombre__contains=str(titulo)).order_by('precio')#ordenamos por precio para mostrar los baratos
+        juegos_list = Juego.objects.all().order_by('precio')#ordenamos por precio para mostrar los baratos.
         paginator = Paginator(juegos_list,6)#muestra 6 juegos por pagina
         try:
             juegos = paginator.page(page)

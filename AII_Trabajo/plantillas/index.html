@@ -99,12 +99,12 @@
 	  {% if not mostrarForm %}
 	  <header>
 	        <div class="header-content">
-	            <div class="header-content-inner">
-	            	<div class="col-md-12">
+	            <div class="row">
+{#	            	<div class="col-md-12">#}
 						{% for juego in juegos %}
 							<div class="col-md-4">{#Para que los juegos se muestren en 3 columnas#}
 							    <b>Título:</b> {{ juego.nombre|upper }}<br />
-							    <b>Precio:<b/> 
+							    <b>Precio:</b> 
 							    	{% if juego.precio == 0.0%}
 							    		Free to Play
 							    	{%else%}
@@ -121,7 +121,7 @@
 								<p>No se encontraron resultados</p>
 							</div>
 						{% endfor %}
-					<div>
+{#					<div>#}
 					<br />
 					<div class=" col-md-12 pagination">{#Parte de la paginacion#}
 					    <span class="step-links">
